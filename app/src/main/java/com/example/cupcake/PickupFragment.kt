@@ -30,12 +30,8 @@ import com.example.cupcake.model.OrderViewModel
  */
 class PickupFragment : Fragment() {
 
-    // Binding object instance corresponding to the fragment_pickup.xml layout
-    // This property is non-null between the onCreateView() and onDestroyView() lifecycle callbacks,
-    // when the view hierarchy is attached to the fragment.
     private var binding: FragmentPickupBinding? = null
 
-    // Use the 'by activityViewModels()' Kotlin property delegate from the fragment-ktx artifact
     private val sharedViewModel: OrderViewModel by activityViewModels()
 
     override fun onCreateView(
