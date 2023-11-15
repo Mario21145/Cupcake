@@ -15,6 +15,8 @@
  */
 package com.example.cupcake.model
 
+import android.content.Context
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -32,10 +34,15 @@ class OrderViewModel : ViewModel() {
     private val _quantity = MutableLiveData<Int>()
     val quantity: LiveData<Int> = _quantity
 
+    private val _counterCupcake = MutableLiveData<Int>()
+    val counterCupcake: LiveData<Int> = _counterCupcake
+
     private val _flavor = MutableLiveData<String>()
     val flavor: LiveData<String> = _flavor
 
     val dateOptions: List<String> = getPickupOptions()
+
+    val flavorsSelected: MutableList<String> = mutableListOf()
 
     private val _date = MutableLiveData<String>()
     val date: LiveData<String> = _date
@@ -98,11 +105,19 @@ class OrderViewModel : ViewModel() {
         _adress.value = adress
     }
 
+
+
+    fun incrementCounterCupcake() {
+        _counterCupcake.value = _counterCupcake.value?.plus(1)
+    }
+
     fun resetOrder() {
         _quantity.value = 0
         _flavor.value = ""
         _date.value = dateOptions[0]
         _price.value = 0.0
+
+        _counterCupcake.value = 0
 
         _name.value = ""
         _surname.value = ""
@@ -129,5 +144,8 @@ class OrderViewModel : ViewModel() {
         return options
     }
 
+    fun showToast(context: Context, msg: String, duration: Int) {
+        Toast.makeText(context, msg, duration).show()
+    }
 
 }

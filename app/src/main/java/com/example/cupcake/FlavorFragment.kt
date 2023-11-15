@@ -16,9 +16,11 @@
 package com.example.cupcake
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -37,8 +39,6 @@ class FlavorFragment : Fragment() {
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentFlavorBinding? = null
     private val sharedViewModel: OrderViewModel by activityViewModels()
-
-    private var count by Delegates.notNull<Int>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -63,13 +63,32 @@ class FlavorFragment : Fragment() {
     /**
      * Navigate to the next screen to choose pickup date.
      */
+
     fun goToNextScreen() {
-        count = 0
-        if(sharedViewModel.quantity.value!! > count){
-            count.inc()
+        if(sharedViewModel.quantity.value!! > sharedViewModel.counterCupcake.value!! ){
+            sharedViewModel.incrementCounterCupcake()
+
+            val numberButtons = binding?.flavorOptions?.childCount
+            var isActive = false
+            for (i in 0 until numberButtons!!) {
+                val radioButton = binding?.flavorOptions?.getChildAt(i) as RadioButton
+
+                if (radioButton.isChecked) {
+                    isActive = true
+                    sharedViewModel.flavorsSelected.add(radioButton.text.toString())
+                    break
+                }
+            }
+
+
+            Log.d("Count" , sharedViewModel.counterCupcake.value.toString())
+            Log.d("ListFlavors" , sharedViewModel.flavorsSelected.toString())
+            findNavController().navigate(R.id.action_flavorFragment_self)
+        } else {
+            findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
         }
 
-        findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
+
     }
 
     /**

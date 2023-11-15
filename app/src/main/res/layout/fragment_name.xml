@@ -116,18 +116,17 @@
                     android:layout_marginRight="10dp"
 
 
-                    app:layout_constraintEnd_toStartOf="@id/next_button"
+                    app:layout_constraintEnd_toStartOf="@id/nextButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/next_button"
+                    app:layout_constraintTop_toTopOf="@id/nextButton"
                     />
 
                 <Button
-                    android:id="@+id/next_button"
+                    android:id="@+id/nextButton"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:onClick="@{() -> nameFragment.goToNextScreen()}"
                     android:text="@string/next"
-                    android:enabled="false"
                     android:layout_marginTop="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
