@@ -25,7 +25,7 @@
     <string name="red_velvet">Red Velvet</string>
     <string name="salted_caramel">Salted Caramel</string>
     <string name="coffee">Coffee</string>
-    <string name="special_flavor">Special Flavor</string>
+    <string name="special_flavor">Salted Caramel</string>
     <string name="cancel">Cancel</string>
     <string name="next">Next</string>
     <string name="choose_pickup_date">Choose Pickup Date</string>
@@ -39,4 +39,6 @@
     <string name="new_cupcake_order">New Cupcake Order</string>
     <string name="order_details">Quantity: %1$s cupcakes \n Flavor: %2$s \nPickup date: %3$s \n
         Total: %4$s \n\n Thank you!</string>
+    <string name="data_details">Name: %1$s\nSurname: %2$s\nlocation: %3$s\nPhone: %4$s\n</string>
+    <string name="data_label">YOUR DATA</string>
 </resources>

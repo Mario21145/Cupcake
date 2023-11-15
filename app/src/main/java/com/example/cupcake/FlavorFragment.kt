@@ -25,6 +25,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.cupcake.databinding.FragmentFlavorBinding
 import com.example.cupcake.model.OrderViewModel
+import kotlin.properties.Delegates
 
 /**
  * [FlavorFragment] allows a user to choose a cupcake flavor for the order.
@@ -36,6 +37,9 @@ class FlavorFragment : Fragment() {
     // when the view hierarchy is attached to the fragment.
     private var binding: FragmentFlavorBinding? = null
     private val sharedViewModel: OrderViewModel by activityViewModels()
+
+    private var count by Delegates.notNull<Int>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -60,12 +64,12 @@ class FlavorFragment : Fragment() {
      * Navigate to the next screen to choose pickup date.
      */
     fun goToNextScreen() {
-        findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
-    }
+        count = 0
+        if(sharedViewModel.quantity.value!! > count){
+            count.inc()
+        }
 
-    fun checkSpecialFlavor(){
-        val radioGroup = binding!!.flavorOptions
-        radioGroup.getChildAt(3).isEnabled = false
+        findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
     }
 
     /**

@@ -35,11 +35,11 @@
                     android:id="@+id/option0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:checked="@{viewModel.date.equals(viewModel.dateOptions[0])}"
+                    android:enabled="@{viewModel.flavor.equals(@string/special_flavor) ? false : true}"
+                    android:checked="@{viewModel.date.equals(viewModel.dateOptions[0]) }"
                     android:onClick="@{() -> viewModel.setDate(viewModel.dateOptions[0])}"
                     android:text="@{viewModel.dateOptions[0]}"
-                    tools:text="Thursday" />
+                    tools:text="Thursday"/>
 
                 <RadioButton
                     android:id="@+id/option1"
@@ -109,6 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_margin"
                 android:onClick="@{() -> pickupFragment.goToNextScreen()}"
+                android:enabled="@{viewModel.date.equals(viewModel.dateOptions[0]) ? false : true}"
                 android:text="@string/next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
