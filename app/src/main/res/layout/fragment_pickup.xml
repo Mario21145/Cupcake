@@ -109,7 +109,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_margin"
                 android:onClick="@{() -> pickupFragment.goToNextScreen()}"
-                android:enabled="@{!viewModel.flavor.equals(@string/special_flavor)}"
+                android:enabled="@{viewModel.flavorsSelected.contains(@string/special_flavor) &amp;&amp; viewModel.date.contains(viewModel.dateOptions[0]) ? false : true}"
                 android:text="@string/next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

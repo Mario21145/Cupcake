@@ -37,8 +37,11 @@
     <string name="subtotal_price">Subtotal %s</string>
     <string name="total_price">Total %s</string>
     <string name="new_cupcake_order">New Cupcake Order</string>
-    <string name="order_details">Quantity: %1$s cupcakes \n Flavor: %2$s \nPickup date: %3$s \n
-        Total: %4$s \n\n Thank you!</string>
+    <string name="order_details">Quantity: %1$s cupcakes \n Flavor: %2$s \nPickup date: %3$s \nName: %4$s \nSurname: %5$s \nAdress: %6$s \nPhone: %7$s \n
+        Total: %8$s \n\n Thank you!</string>
+    <string name="flavors_details">Vanilla  x%d \nChocolate  x%d \nRedVelvet  x%d \nSaltedCaramel  x%d \nCoffee  x%d\n</string>
     <string name="data_details">Name: %1$s\nSurname: %2$s\nlocation: %3$s\nPhone: %4$s\n</string>
+    <string name="disclaimerSpecialFlavor">The special flavor (%s), is not derivable today</string>
     <string name="data_label">YOUR DATA</string>
+    <string name="counterCupcake">Cupcake #%d</string>
 </resources>

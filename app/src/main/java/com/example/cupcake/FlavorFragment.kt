@@ -18,6 +18,8 @@ package com.example.cupcake
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
@@ -58,6 +60,8 @@ class FlavorFragment : Fragment() {
             flavorFragment = this@FlavorFragment
             nextButton.setOnClickListener { goToNextScreen() }
         }
+
+        setHasOptionsMenu(true)
     }
 
     /**
@@ -69,27 +73,43 @@ class FlavorFragment : Fragment() {
             sharedViewModel.incrementCounterCupcake()
 
             val numberButtons = binding?.flavorOptions?.childCount
-            var isActive = false
             for (i in 0 until numberButtons!!) {
                 val radioButton = binding?.flavorOptions?.getChildAt(i) as RadioButton
 
                 if (radioButton.isChecked) {
-                    isActive = true
                     sharedViewModel.flavorsSelected.add(radioButton.text.toString())
                     break
                 }
             }
 
 
-            Log.d("Count" , sharedViewModel.counterCupcake.value.toString())
             Log.d("ListFlavors" , sharedViewModel.flavorsSelected.toString())
             findNavController().navigate(R.id.action_flavorFragment_self)
         } else {
+            sharedViewModel.countCupcakes()
             findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
         }
-
-
     }
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                if(sharedViewModel.counterCupcake.value == 0){
+                    sharedViewModel.resetOrder()
+                } else {
+                    sharedViewModel.decrementCounterCupcake()
+                    sharedViewModel.flavorsSelected.removeLast()
+                }
+
+                findNavController().popBackStack()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+
 
     /**
      * This fragment lifecycle method is called when the view hierarchy associated with the fragment

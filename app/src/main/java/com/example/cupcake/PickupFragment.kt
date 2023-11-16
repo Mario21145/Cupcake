@@ -17,6 +17,7 @@ package com.example.cupcake
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -51,6 +52,8 @@ class PickupFragment : Fragment() {
             viewModel = sharedViewModel
             pickupFragment = this@PickupFragment
         }
+
+        setHasOptionsMenu(true)
     }
 
     /**
@@ -66,6 +69,21 @@ class PickupFragment : Fragment() {
     fun cancelOrder() {
         sharedViewModel.resetOrder()
         findNavController().navigate(R.id.action_pickupFragment_to_startFragment)
+    }
+
+
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                if(sharedViewModel.date.value!!.isNotEmpty()){
+                    sharedViewModel.setDate("")
+                }
+                findNavController().popBackStack()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
     /**

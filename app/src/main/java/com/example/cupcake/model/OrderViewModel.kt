@@ -21,10 +21,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.cupcake.R
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.absoluteValue
 
 private const val PRICE_PER_CUPCAKE = 2.00
 private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
@@ -36,6 +38,25 @@ class OrderViewModel : ViewModel() {
 
     private val _counterCupcake = MutableLiveData<Int>()
     val counterCupcake: LiveData<Int> = _counterCupcake
+
+
+
+    private val _counterVanilla = MutableLiveData<Int>()
+    val counterVanilla: LiveData<Int> = _counterVanilla
+
+    private val _counterChocolate = MutableLiveData<Int>()
+    val counterChocolate: LiveData<Int> = _counterChocolate
+
+    private val _counterRedVelvet = MutableLiveData<Int>()
+    val counterRedVelvet: LiveData<Int> = _counterRedVelvet
+
+    private val _counterSaltedCaramel = MutableLiveData<Int>()
+    val counterSaltedCaramel: LiveData<Int> = _counterSaltedCaramel
+
+    private val _counterCoffee = MutableLiveData<Int>()
+    val counterCoffee: LiveData<Int> = _counterCoffee
+
+
 
     private val _flavor = MutableLiveData<String>()
     val flavor: LiveData<String> = _flavor
@@ -51,8 +72,6 @@ class OrderViewModel : ViewModel() {
     val price: LiveData<String> = Transformations.map(_price) {
         NumberFormat.getCurrencyInstance().format(it)
     }
-
-
 
     private val _name = MutableLiveData<String>()
     val name: LiveData<String> = _name
@@ -74,7 +93,6 @@ class OrderViewModel : ViewModel() {
         _quantity.value = numberCupcakes
         updatePrice()
     }
-
 
     fun setFlavor(desiredFlavor: String) {
         _flavor.value = desiredFlavor
@@ -109,6 +127,18 @@ class OrderViewModel : ViewModel() {
 
     fun incrementCounterCupcake() {
         _counterCupcake.value = _counterCupcake.value?.plus(1)
+    }
+
+    fun decrementCounterCupcake(){
+        _counterCupcake.value = _counterCupcake.value?.minus(1)
+    }
+
+    fun countCupcakes(){
+        _counterVanilla.value = flavorsSelected.count { it == "Vanilla" }
+        _counterChocolate.value = flavorsSelected.count { it == "Chocolate" }
+        _counterRedVelvet.value = flavorsSelected.count { it == "Red Velvet" }
+        _counterSaltedCaramel.value = flavorsSelected.count { it == "Salted Caramel" }
+        _counterCoffee.value = flavorsSelected.count { it == "Coffee" }
     }
 
     fun resetOrder() {
@@ -147,5 +177,7 @@ class OrderViewModel : ViewModel() {
     fun showToast(context: Context, msg: String, duration: Int) {
         Toast.makeText(context, msg, duration).show()
     }
+
+
 
 }
