@@ -27,6 +27,8 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cupcake.adapter.FlavorAdapter
 import com.example.cupcake.databinding.FragmentFlavorBinding
 import com.example.cupcake.model.OrderViewModel
 import kotlin.properties.Delegates
@@ -62,6 +64,13 @@ class FlavorFragment : Fragment() {
         }
 
         setHasOptionsMenu(true)
+
+        val recyclerView = binding!!.flavorOptions
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        val flavorAdapter = FlavorAdapter(sharedViewModel)
+        recyclerView.adapter = flavorAdapter
+
     }
 
     /**
@@ -69,26 +78,26 @@ class FlavorFragment : Fragment() {
      */
 
     fun goToNextScreen() {
-        if(sharedViewModel.quantity.value!! > sharedViewModel.counterCupcake.value!! ){
-            sharedViewModel.incrementCounterCupcake()
+//        if(sharedViewModel.quantity.value!! > sharedViewModel.counterCupcake.value!! ){
+//            sharedViewModel.incrementCounterCupcake()
+//
+//            val numberButtons = binding?.flavorOptions?.childCount
+//            for (i in 0 until numberButtons!!) {
+//                val radioButton = binding?.flavorOptions?.getChildAt(i) as RadioButton
+//
+//                if (radioButton.isChecked) {
+//                    sharedViewModel.flavorsSelected.add(radioButton.text.toString())
+//                    break
+//                }
+//            }
+//
+//
+//            Log.d("ListFlavors" , sharedViewModel.flavorsSelected.toString())
+//            findNavController().navigate(R.id.action_flavorFragment_self)
+//        } else {
 
-            val numberButtons = binding?.flavorOptions?.childCount
-            for (i in 0 until numberButtons!!) {
-                val radioButton = binding?.flavorOptions?.getChildAt(i) as RadioButton
-
-                if (radioButton.isChecked) {
-                    sharedViewModel.flavorsSelected.add(radioButton.text.toString())
-                    break
-                }
-            }
-
-
-            Log.d("ListFlavors" , sharedViewModel.flavorsSelected.toString())
-            findNavController().navigate(R.id.action_flavorFragment_self)
-        } else {
             sharedViewModel.countCupcakes()
             findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
-        }
     }
 
 

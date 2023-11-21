@@ -44,4 +44,6 @@
     <string name="disclaimerSpecialFlavor">The special flavor (%s), is not derivable today</string>
     <string name="data_label">YOUR DATA</string>
     <string name="counterCupcake">Cupcake #%d</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
