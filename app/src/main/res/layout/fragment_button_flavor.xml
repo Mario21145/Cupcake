@@ -53,9 +53,6 @@
                 app:icon="@drawable/icons8_minus_24"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-
-                android:enabled="@{viewModel.counterCupcake == 0 ? false : true}"
-
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/flavorName" />
@@ -87,9 +84,6 @@
                 app:icon="@drawable/icons8_plus_24"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-
-                android:enabled="@{(viewModel.counterCupcake < viewModel.quantity) ? false : true}"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent" />

@@ -24,6 +24,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.cupcake.R
 import com.example.cupcake.data.DataSource
+import com.example.cupcake.data.FlavorModel
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -35,10 +36,13 @@ private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
 
 class OrderViewModel : ViewModel() {
 
-   private val dataSource = DataSource.flavors
+    val dataSource = DataSource.flavors
 
-    private val _quantity = MutableLiveData<Int>(0)
+    private val _quantity = MutableLiveData(0)
     val quantity: LiveData<Int> = _quantity
+
+    private val _currentQuantity = MutableLiveData(0)
+    val currentQuantity : LiveData<Int> = _currentQuantity
 
     private val _counterCupcake = MutableLiveData<Int>(0)
     val counterCupcake: LiveData<Int> = _counterCupcake
@@ -67,7 +71,7 @@ class OrderViewModel : ViewModel() {
 
     val dateOptions: List<String> = getPickupOptions()
 
-    val flavorsSelected: MutableList<String> = mutableListOf()
+    val flavorsSelected: MutableList<FlavorModel> = mutableListOf()
 
     private val _date = MutableLiveData<String>()
     val date: LiveData<String> = _date
@@ -95,7 +99,6 @@ class OrderViewModel : ViewModel() {
 
     fun setQuantity(numberCupcakes: Int) {
         _quantity.value = numberCupcakes
-        Log.d("ViewModel" , _quantity.value.toString())
         updatePrice()
     }
 
@@ -129,26 +132,48 @@ class OrderViewModel : ViewModel() {
     }
 
     fun incrementCounterCupcake(position : Int) {
-        dataSource[position].number = dataSource[position].number + 1
-        _counterCupcake.value = _counterCupcake.value?.plus(1)
-        Log.d("ViewModel" , counterCupcake.value.toString())
+        if(_counterCupcake.value!!.toInt() < _quantity.value!!.toInt()){
+            dataSource[position].number = dataSource[position].number + 1
+            _counterCupcake.value = _counterCupcake.value?.plus(1)
+        }
+        calcCurrentQuantity("decrement")
     }
 
-
     fun decrementCounterCupcake(position : Int){
-        dataSource[position].number = dataSource[position].number - 1
-        _counterCupcake.value = _counterCupcake.value?.minus(1)
-        Log.d("ViewModel" , counterCupcake.value.toString())
+        if(_counterCupcake.value!!.toInt() > 0){
+            dataSource[position].number = dataSource[position].number - 1
+            _counterCupcake.value = _counterCupcake.value?.minus(1)
+        }
+        calcCurrentQuantity("increment")
+    }
+
+    private fun calcCurrentQuantity(case : String){
+
+        if(case == "decrement"){
+            _currentQuantity.value = _counterCupcake.value?.let {
+                val remainingQuantity = _quantity.value!!.minus(it)
+                if (remainingQuantity >= 0) remainingQuantity else 0
+            }
+        }
+
+        if(case == "increment"){
+            _currentQuantity.value = _counterCupcake.value?.let {
+                val remainingQuantity = _quantity.value!!.minus(it)
+                if (remainingQuantity >= 0) remainingQuantity else 0
+            }
+        }
+
+        Log.d("result" , _currentQuantity.value!!.toInt().toString())
+
     }
 
     fun countCupcakes(){
-        _counterVanilla.value = flavorsSelected.count { it == "Vanilla" }
-        _counterChocolate.value = flavorsSelected.count { it == "Chocolate" }
-        _counterRedVelvet.value = flavorsSelected.count { it == "Red Velvet" }
-        _counterSaltedCaramel.value = flavorsSelected.count { it == "Salted Caramel" }
-        _counterCoffee.value = flavorsSelected.count { it == "Coffee" }
+        _counterVanilla.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Vanilla" }
+        _counterChocolate.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Chocolate" }
+        _counterRedVelvet.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Red Velvet" }
+        _counterSaltedCaramel.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Salted Caramel" }
+        _counterCoffee.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Coffee" }
     }
-
 
     fun resetOrder() {
         _quantity.value = 0

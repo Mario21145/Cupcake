@@ -78,25 +78,19 @@ class FlavorFragment : Fragment() {
      */
 
     fun goToNextScreen() {
-//        if(sharedViewModel.quantity.value!! > sharedViewModel.counterCupcake.value!! ){
-//            sharedViewModel.incrementCounterCupcake()
-//
-//            val numberButtons = binding?.flavorOptions?.childCount
-//            for (i in 0 until numberButtons!!) {
-//                val radioButton = binding?.flavorOptions?.getChildAt(i) as RadioButton
-//
-//                if (radioButton.isChecked) {
-//                    sharedViewModel.flavorsSelected.add(radioButton.text.toString())
-//                    break
-//                }
-//            }
-//
-//
-//            Log.d("ListFlavors" , sharedViewModel.flavorsSelected.toString())
-//            findNavController().navigate(R.id.action_flavorFragment_self)
-//        } else {
 
+        sharedViewModel.dataSource.forEachIndexed { index, flavor ->
+            sharedViewModel.flavorsSelected.add(flavor)
+            Log.d("flavors", "${flavor.name} , ${flavor.number} - $index")
             sharedViewModel.countCupcakes()
+        }
+
+//            sharedViewModel.dataSource.forEach{
+//                sharedViewModel.flavorsSelected.add(it)
+//                Log.d("flavors" ,  sharedViewModel.flavorsSelected.toString())
+//                sharedViewModel.countCupcakes()
+//            }
+
             findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
     }
 
@@ -106,8 +100,6 @@ class FlavorFragment : Fragment() {
             android.R.id.home -> {
                 if(sharedViewModel.counterCupcake.value == 0){
                     sharedViewModel.resetOrder()
-                } else {
-//                    sharedViewModel.decrementCounterCupcake()
                     sharedViewModel.flavorsSelected.removeLast()
                 }
 

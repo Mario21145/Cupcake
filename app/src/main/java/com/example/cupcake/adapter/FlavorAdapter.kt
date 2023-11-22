@@ -1,13 +1,11 @@
 package com.example.cupcake.adapter
 
-import android.util.Log
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cupcake.ButtonFlavorFragment
 import com.example.cupcake.R
@@ -19,7 +17,7 @@ class FlavorAdapter(private val viewModel: OrderViewModel): RecyclerView.Adapter
 
     private val dataSource = DataSource.flavors
     class FlavorViewHolder(view: View?): RecyclerView.ViewHolder(view!!) {
-        var nameFragment : TextView = view!!.findViewById(R.id.flavorName)
+        var nameFlavor : TextView = view!!.findViewById(R.id.flavorName)
         var numberCupcake : TextView = view!!.findViewById(R.id.numberCupCake)
         var minusButton : Button = view!!.findViewById(R.id.minus)
         var plusButton : Button = view!!.findViewById(R.id.plus)
@@ -34,24 +32,24 @@ class FlavorAdapter(private val viewModel: OrderViewModel): RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: FlavorViewHolder, position: Int) {
-        val data = dataSource[position]
-        holder.nameFragment.text = data.name
+        val data = viewModel.dataSource[position]
+        holder.nameFlavor.text = data.name
         holder.numberCupcake.text = data.number.toString()
 
-        if(data.number == 0 ){
-            holder.minusButton.isEnabled = false
-        } else if(data.number > 0){
-            holder.minusButton.isEnabled = true
+        holder.minusButton.isEnabled = data.number != 0
+        holder.plusButton.isEnabled = viewModel.currentQuantity.value!!.toInt() != viewModel.quantity.value!!.toInt()
+
+        holder.plusButton.setOnClickListener {
+            viewModel.incrementCounterCupcake(position)
+            notifyDataSetChanged()
+        }
+        holder.minusButton.setOnClickListener {
+            viewModel.decrementCounterCupcake(position)
+            notifyDataSetChanged()
         }
 
-        holder.plusButton.setOnClickListener{
-            viewModel.incrementCounterCupcake(position)
-            holder.numberCupcake.text = data.number.toString()
-        }
-        holder.minusButton.setOnClickListener{
-            viewModel.decrementCounterCupcake(position)
-            holder.numberCupcake.text = data.number.toString()
-        }
+
+
     }
 
     override fun getItemCount(): Int {
