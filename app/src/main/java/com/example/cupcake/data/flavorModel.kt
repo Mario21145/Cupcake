@@ -1,6 +1,7 @@
 package com.example.cupcake.data
 
 
-    data class flavorModel(
+    data class FlavorModel(
         val name: String,
+        var number: Int = 0,
     )

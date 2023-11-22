@@ -16,12 +16,14 @@
 package com.example.cupcake.model
 
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.example.cupcake.R
+import com.example.cupcake.data.DataSource
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -33,10 +35,12 @@ private const val PRICE_FOR_SAME_DAY_PICKUP = 3.00
 
 class OrderViewModel : ViewModel() {
 
-    private val _quantity = MutableLiveData<Int>()
+   private val dataSource = DataSource.flavors
+
+    private val _quantity = MutableLiveData<Int>(0)
     val quantity: LiveData<Int> = _quantity
 
-    private val _counterCupcake = MutableLiveData<Int>()
+    private val _counterCupcake = MutableLiveData<Int>(0)
     val counterCupcake: LiveData<Int> = _counterCupcake
 
 
@@ -91,6 +95,7 @@ class OrderViewModel : ViewModel() {
 
     fun setQuantity(numberCupcakes: Int) {
         _quantity.value = numberCupcakes
+        Log.d("ViewModel" , _quantity.value.toString())
         updatePrice()
     }
 
@@ -123,14 +128,17 @@ class OrderViewModel : ViewModel() {
         _adress.value = adress
     }
 
-
-
-    fun incrementCounterCupcake() {
+    fun incrementCounterCupcake(position : Int) {
+        dataSource[position].number = dataSource[position].number + 1
         _counterCupcake.value = _counterCupcake.value?.plus(1)
+        Log.d("ViewModel" , counterCupcake.value.toString())
     }
 
-    fun decrementCounterCupcake(){
+
+    fun decrementCounterCupcake(position : Int){
+        dataSource[position].number = dataSource[position].number - 1
         _counterCupcake.value = _counterCupcake.value?.minus(1)
+        Log.d("ViewModel" , counterCupcake.value.toString())
     }
 
     fun countCupcakes(){
@@ -140,6 +148,7 @@ class OrderViewModel : ViewModel() {
         _counterSaltedCaramel.value = flavorsSelected.count { it == "Salted Caramel" }
         _counterCoffee.value = flavorsSelected.count { it == "Coffee" }
     }
+
 
     fun resetOrder() {
         _quantity.value = 0
@@ -177,6 +186,7 @@ class OrderViewModel : ViewModel() {
     fun showToast(context: Context, msg: String, duration: Int) {
         Toast.makeText(context, msg, duration).show()
     }
+
 
 
 

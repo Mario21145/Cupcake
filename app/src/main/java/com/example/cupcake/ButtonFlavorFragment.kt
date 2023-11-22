@@ -18,19 +18,14 @@ class ButtonFlavorFragment : Fragment() {
         savedInstanceState: Bundle?,
     ): View? {
         val binding = FragmentButtonFlavorBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding!!.plus.setOnClickListener{
 
-        }
-
-        binding!!.minus.setOnClickListener{
-
-        }
 
 
     }

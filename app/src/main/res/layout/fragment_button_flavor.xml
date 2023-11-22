@@ -5,6 +5,14 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.example.cupcake.model.OrderViewModel" />
+
+        <variable
+            name="buttonFragment"
+            type="com.example.cupcake.ButtonFlavorFragment" />
+
     </data>
 
     <FrameLayout
@@ -23,7 +31,7 @@
                 android:id="@+id/flavorName"
                 android:layout_width="150dp"
                 android:layout_height="40dp"
-                android:text="TextView"
+                android:text="Flavor"
                 android:textSize="18dp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -38,7 +46,6 @@
                 android:id="@+id/minus"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
@@ -46,6 +53,8 @@
                 app:icon="@drawable/icons8_minus_24"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
+
+                android:enabled="@{viewModel.counterCupcake == 0 ? false : true}"
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -65,13 +74,12 @@
                 app:layout_constraintEnd_toStartOf="@+id/plus"
                 app:layout_constraintStart_toEndOf="@+id/minus"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:text="6" />
+                tools:text="3" />
 
             <Button
                 android:id="@+id/plus"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-
                 android:insetLeft="0dp"
                 android:insetTop="0dp"
                 android:insetRight="0dp"
@@ -80,6 +88,7 @@
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
 
+                android:enabled="@{(viewModel.counterCupcake < viewModel.quantity) ? false : true}"
 
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

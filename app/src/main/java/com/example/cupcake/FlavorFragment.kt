@@ -107,7 +107,7 @@ class FlavorFragment : Fragment() {
                 if(sharedViewModel.counterCupcake.value == 0){
                     sharedViewModel.resetOrder()
                 } else {
-                    sharedViewModel.decrementCounterCupcake()
+//                    sharedViewModel.decrementCounterCupcake()
                     sharedViewModel.flavorsSelected.removeLast()
                 }
 
