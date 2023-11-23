@@ -96,6 +96,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/side_margin"
                 android:onClick="@{() -> flavorFragment.goToNextScreen()}"
+                android:enabled="@{viewModel.counterCupcake &lt; viewModel.quantity ? false : true}"
                 android:text="@string/next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -87,6 +87,7 @@
                 android:minWidth="@dimen/order_cupcake_button_width"
                 android:onClick="@{() -> startFragment.orderCupcake(12)}"
                 android:text="@string/twelve_cupcakes" />
+
         </LinearLayout>
     </ScrollView>
 </layout>

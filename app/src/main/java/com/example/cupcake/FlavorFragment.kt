@@ -46,7 +46,7 @@ class FlavorFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val fragmentBinding = FragmentFlavorBinding.inflate(inflater, container, false)
         binding = fragmentBinding
@@ -78,39 +78,22 @@ class FlavorFragment : Fragment() {
      */
 
     fun goToNextScreen() {
-
-        sharedViewModel.dataSource.forEachIndexed { index, flavor ->
-            sharedViewModel.flavorsSelected.add(flavor)
-            Log.d("flavors", "${flavor.name} , ${flavor.number} - $index")
-            sharedViewModel.countCupcakes()
-        }
-
-//            sharedViewModel.dataSource.forEach{
-//                sharedViewModel.flavorsSelected.add(it)
-//                Log.d("flavors" ,  sharedViewModel.flavorsSelected.toString())
-//                sharedViewModel.countCupcakes()
-//            }
-
-            findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
+        sharedViewModel.countCupcakes()
+        findNavController().navigate(R.id.action_flavorFragment_to_pickupFragment)
     }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             android.R.id.home -> {
-                if(sharedViewModel.counterCupcake.value == 0){
-                    sharedViewModel.resetOrder()
-                    sharedViewModel.flavorsSelected.removeLast()
-                }
-
+                sharedViewModel.resetOrder()
                 findNavController().popBackStack()
                 true
             }
+
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-
 
     /**
      * This fragment lifecycle method is called when the view hierarchy associated with the fragment

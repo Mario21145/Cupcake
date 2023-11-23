@@ -65,13 +65,13 @@ class OrderViewModel : ViewModel() {
     val counterCoffee: LiveData<Int> = _counterCoffee
 
 
-
     private val _flavor = MutableLiveData<String>()
     val flavor: LiveData<String> = _flavor
 
+
     val dateOptions: List<String> = getPickupOptions()
 
-    val flavorsSelected: MutableList<FlavorModel> = mutableListOf()
+    val flavorsSelected: MutableList<String> = mutableListOf("")
 
     private val _date = MutableLiveData<String>()
     val date: LiveData<String> = _date
@@ -167,26 +167,33 @@ class OrderViewModel : ViewModel() {
 
     }
 
+
     fun countCupcakes(){
-        _counterVanilla.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Vanilla" }
-        _counterChocolate.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Chocolate" }
-        _counterRedVelvet.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Red Velvet" }
-        _counterSaltedCaramel.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Salted Caramel" }
-        _counterCoffee.value = flavorsSelected.count { flavorModel ->  flavorModel.name == "Coffee" }
+        _counterVanilla.value = flavorsSelected.count { it == "Vanilla" }
+        _counterChocolate.value = flavorsSelected.count { it == "Chocolate" }
+        _counterRedVelvet.value = flavorsSelected.count { it == "Red Velvet" }
+        _counterSaltedCaramel.value = flavorsSelected.count { it  == "Salted Caramel" }
+        _counterCoffee.value = flavorsSelected.count { it == "Coffee" }
     }
 
     fun resetOrder() {
         _quantity.value = 0
+        _counterCupcake.value = 0
+        _currentQuantity.value = 0
+
         _flavor.value = ""
         _date.value = dateOptions[0]
         _price.value = 0.0
-
-        _counterCupcake.value = 0
 
         _name.value = ""
         _surname.value = ""
         _phone.value = ""
         _adress.value = ""
+
+        for (flavor in dataSource) {
+            flavor.number = 0
+        }
+
     }
 
     private fun updatePrice() {

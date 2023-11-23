@@ -35,7 +35,6 @@
                     android:id="@+id/option0"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:enabled="@{viewModel.flavorsSelected.contains(@string/special_flavor) ? false : true}"
                     android:checked="@{viewModel.date.equals(viewModel.dateOptions[0]) }"
                     android:onClick="@{() -> viewModel.setDate(viewModel.dateOptions[0])}"
                     android:text="@{viewModel.dateOptions[0]}"
